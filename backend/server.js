@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const { createTodo } = require('./types');
+const { todo } = require('./db');
 
 
 app.use(express.json());
@@ -8,7 +9,7 @@ app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
 
-app.post('/todo', (req, res) => {
+app.post('/todo', async function(req, res) {
     const createPayload = req.body;
     const parsePayload = createTodo.safeParse(createPayload);
     if(!parsePayload.success) {
@@ -18,13 +19,25 @@ app.post('/todo', (req, res) => {
         return;
     }
     // put it in mongodb
+    await todo.create({
+       title: createPayload.title,
+       description: createPayload.description,
+       completed: false
+    })
+    res.json({
+        msg: "Todo created successfully",
+    })
 })
 
-app.get('/todos', (req, res) => {
-
+app.get('/todos', async function(req, res) {
+    const todos = todo.find({});
+    // console.log(todos); // this will be a promise
+    res.json({
+        todos
+    })
 })
 
-app.put('/completed', (req, res) => {
+app.put('/completed', async function(req, res) {
     const updatePayload = req.body;
     const parsePayload = updateTodo.safeParse(updatePayload);
 
@@ -34,6 +47,15 @@ app.put('/completed', (req, res) => {
         })
         return;
     }
+    await todo.update({
+        _id: req.body.id
+    }, {
+        completed: true
+    })
+
+    res.json( {
+        msg: "Todo marked as completed"
+    })
 })
 
 // write basic express boilerplate code
