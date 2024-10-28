@@ -4,7 +4,7 @@ app.use(express.json());
 const cors = require('cors');
 app.use(cors());
 require('dotenv').config();
-const { createTodo } = require('./types');
+const { createTodo, updateTodo } = require('./types');
 const PORT = process.env.PORT;
 const { todo } = require('./db');
 
@@ -52,16 +52,14 @@ app.put('/completed', async function(req, res) {
         })
         return;
     }
-    await todo.update({
-        _id: req.body.id
-    }, {
+    await todo.findByIdAndUpdate(req.body.id, {
         completed: true
-    })
+    });
 
-    res.json( {
+    res.json({
         msg: "Todo marked as completed"
-    })
-})
+    });
+});
 
 // write basic express boilerplate code
 // with express.json() middleware
