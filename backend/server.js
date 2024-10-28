@@ -1,12 +1,17 @@
 const express = require('express');
 const app = express();
+app.use(express.json());
+const cors = require('cors');
+app.use(cors());
+require('dotenv').config();
 const { createTodo } = require('./types');
+const PORT = process.env.PORT;
 const { todo } = require('./db');
 
 
-app.use(express.json());
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+
+app.listen(PORT, () => {
+  console.log('Server is running on port 3030');
 });
 
 app.post('/todo', async function(req, res) {

@@ -1,11 +1,28 @@
 import React from 'react'
 
-const Todos = () => {
+/*
+todos = [
+    {
+        title: "Go to gym",
+        description: "You need to go to the gym",
+    }
+    ]
+*/
+
+const Todos = ({ todos }) => {
   return (
     <div>
-        <h2>Go to gym</h2>
-        <h3>You need to go to the gym</h3>
-        <button>Mark as completed</button>
+        {
+            todos.map(function(todo) {
+                return (
+                    <div>
+                        <h1>{todo.title}</h1>
+                        <p>{todo.description}</p>
+                        <button>{todo.completed === true ? "Completed" : "Mark as Completed"}</button>
+                    </div>
+                )
+            })
+        }
     </div>
   )
 }
