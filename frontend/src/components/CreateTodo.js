@@ -16,7 +16,7 @@ const CreateTodo = () => {
         }} placeholder="description" /> <br />
 
         <button onClick={() => {
-            fetch('http://localhose:3030/todo', {
+            fetch('http://localhost:3030/todo', {
                 method: 'POST',
                 body: JSON.stringify({
                     title: title,
