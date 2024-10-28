@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://milendrakumarbaghel:CR0L3S0zDYMojbar@cluster0.fqqcbti.mongodb.net/todo');
+mongoose.connect(MONGODB_CONNECTIONSTRING);
 
 const todoSchema = new mongoose.Schema({
     title: String,
@@ -7,7 +7,7 @@ const todoSchema = new mongoose.Schema({
     completed: Boolean
 })
 
-const todo = mongoose.model('todo', todoSchema);
+const todo = mongoose.model('todos', todoSchema);
 module.exports = {
     todo
 }

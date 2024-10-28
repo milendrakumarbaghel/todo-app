@@ -30,7 +30,7 @@ app.post('/todo', async function(req, res) {
 })
 
 app.get('/todos', async function(req, res) {
-    const todos = todo.find({});
+    const todos =  await todo.find({});
     // console.log(todos); // this will be a promise
     res.json({
         todos
